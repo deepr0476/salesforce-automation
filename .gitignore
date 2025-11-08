@@ -1,7 +1,19 @@
+# Node dependencies
 node_modules/
+
+# Environment variables
 .env
-*.log
-*.xlsx
-playwright-report/
+
+# Excel data
+data/
+Evidence/
+output/
+
+# Playwright test results and reports
 test-results/
+playwright-report/
+blob-report/
+
+# Mac system files
 .DS_Store
+
