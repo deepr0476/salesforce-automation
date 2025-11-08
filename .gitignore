@@ -12,8 +12,8 @@ output/
 # Playwright test results and reports
 test-results/
 playwright-report/
-Reports/
-echo "Reports/" >> .gitignore
+reports/
+echo "reports/" >> .gitignore
 
 blob-report/
 
@@ -23,3 +23,4 @@ blob-report/
 
 
 Reports/
+reports/
