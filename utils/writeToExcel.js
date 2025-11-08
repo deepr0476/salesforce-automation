@@ -1,67 +1,44 @@
-const ExcelJS = require('exceljs');
-const path = require('path');
-const fs = require('fs');
+// utils/writeToExcel.js
+import ExcelJS from 'exceljs';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-const evidenceFolder = path.resolve(__dirname, '../Evidence');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-//  Ensure the Evidence folder exists
-if (!fs.existsSync(evidenceFolder)) {
-  fs.mkdirSync(evidenceFolder);
-}
-
-// IST timestamp function
-function getTimestamp() {
-  const now = new Date();
-
-  const formatter = new Intl.DateTimeFormat('en-IN', {
-    timeZone: 'Asia/Kolkata',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  });
-
-  const parts = formatter.formatToParts(now);
-  const get = (type) => parts.find(p => p.type === type)?.value;
-
-  return `${get('year')}${get('month')}${get('day')}_${get('hour')}${get('minute')}${get('second')}`;
-}
-
-//  Write account data to a timestamped Excel file
-async function writeAccountResultsToExcel(data) {
+export async function writeAccountResultsToExcel(outputs) {
   const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Account Results');
 
-  // Generate filename with IST timestamp
-  const fileName = `test-data_${getTimestamp()}.xlsx`;
-  const outputFile = path.join(evidenceFolder, fileName);
+  worksheet.columns = [
+    { header: 'S.No', key: 'SNo', width: 10 },
+    { header: 'Account Type', key: 'AccountType', width: 20 },
+    { header: 'Account Name', key: 'AccountName', width: 30 },
+    { header: 'Firstname', key: 'Firstname', width: 20 },
+    { header: 'Lastname', key: 'Lastname', width: 20 },
+    { header: 'Phone', key: 'Phone', width: 20 },
+    { header: 'Website', key: 'Website', width: 30 },
+    { header: 'Account Id', key: 'AccountId', width: 25 },
+    { header: 'Status', key: 'Status', width: 10 },
+    { header: 'Duration (s)', key: 'Duration', width: 15 }
+  ];
 
-  const sheet = workbook.addWorksheet('Output');
-  sheet.columns = [
-  { header: 'SNo', key: 'SNo' },
-  { header: 'AccountType', key: 'AccountType' },
-  { header: 'AccountName', key: 'AccountName' },
-  { header: 'Firstname', key: 'Firstname' },
-  { header: 'Lastname', key: 'Lastname' },
-  { header: 'Phone', key: 'Phone' },
-  { header: 'Website', key: 'Website' },
-  { header: 'AccountId', key: 'AccountId' },
-  { header: 'Status', key: 'Status' },
-  { header: 'Duration(s)', key: 'Duration' }, 
-];
+  outputs.forEach((row) => worksheet.addRow(row));
 
+  // 🔹 test-data style timestamp
+  const now = new Date();
+  const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
 
-  data.forEach((row) => {
-    sheet.addRow(row);
-  });
+  // 🔹 Save inside Evidence folder
+  const outputDir = path.join(__dirname, '../Evidence');
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+    console.log(`📁 Created folder: ${outputDir}`);
+  }
 
-  await workbook.xlsx.writeFile(outputFile);
-  console.log(' Output written to Excel at:', outputFile);
+  const filePath = path.join(outputDir, `test-data_${timestamp}.xlsx`);
+  await workbook.xlsx.writeFile(filePath);
 
-  return outputFile;
+  console.log(`✅ Results saved to: ${filePath}`);
 }
-
-module.exports = { writeAccountResultsToExcel };
-
