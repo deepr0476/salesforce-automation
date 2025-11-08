@@ -12,8 +12,11 @@ output/
 # Playwright test results and reports
 test-results/
 playwright-report/
+Reports/
 blob-report/
 
 # Mac system files
 .DS_Store
+
+
 
