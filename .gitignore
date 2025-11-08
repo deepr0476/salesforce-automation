@@ -13,6 +13,8 @@ output/
 test-results/
 playwright-report/
 Reports/
+echo "Reports/" >> .gitignore
+
 blob-report/
 
 # Mac system files
