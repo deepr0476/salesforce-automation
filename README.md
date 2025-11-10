@@ -12,23 +12,25 @@ It’s designed with a **modular framework structure** for scalability and reusa
 - **Writes output data** (Account Name, ID, Status, Duration) to Excel.
 - Uses **Faker.js** for random test data generation.
 - Fully supports **environment variables** via `.env` for credentials.
+- Captures **screenshots and videos** on failure for debugging.
+- Generates **HTML reports** for easy test result analysis.
 
 ---
 
 ## ⚙️ Folder Structure
-salesforce-automation/
-│
-├── config/ # Environment or Playwright configs
-├── data/ # Excel input data (ignored in git)
-├── Evidence/ # Test output files and screenshots (ignored in git)
-├── pages/ # Page Object files (loginPage, accountsPage, newAccountDialog)
-├── tests/ # Test specs
-├── utils/ # Utility modules (Excel, Crypto, Faker helpers)
-│
-├── .env # Encrypted Salesforce credentials
-├── .gitignore
-├── package.json
-└── README.md
+salesforce-automation/  
+│  
+├── config/             # Environment or Playwright configs  
+├── data/               # Excel input data (ignored in git)  
+├── Evidence/           # Test output files and screenshots/videos (ignored in git)  
+├── pages/              # Page Object files (loginPage, accountsPage, newAccountDialog)  
+├── tests/              # Test specs  
+├── utils/              # Utility modules (Excel, Crypto, Faker helpers)  
+│  
+├── .env                # Encrypted Salesforce credentials  
+├── .gitignore  
+├── package.json  
+└── README.md  
 
 ---
 
@@ -37,18 +39,3 @@ salesforce-automation/
 ### 1️⃣ Install dependencies
 ```bash
 npm install
-
-Configure environment
-
-Create a .env file in the project root:
-SF_USERNAME_ENC=your_encrypted_username
-SF_PASSWORD_ENC=your_encrypted_password
-
-Prepare test data
-
-Put your Excel file inside /data/data.xlsx with sheets:
-
-Login → contains encrypted username & password
-
-AccountControl → defines account types and count
-
