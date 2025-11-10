@@ -1,8 +1,9 @@
-import { defineConfig, devices } from '@playwright/test';
+// playwright.config.js
+import { defineConfig } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// 🔹 ES module me __dirname
+// 🔹 ES module me __dirname handle karne ke liye
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -10,35 +11,37 @@ export default defineConfig({
   testDir: './tests',
   timeout: 0,
   expect: { timeout: 10000 },
-  reporter: [['list'], ['html', { outputFolder: 'Reports/playwright-report' }]],
+
+  // Reporter setup: list in console + html report in existing Reports folder
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: path.join(__dirname, 'Reports/playwright-report') }]
+  ],
+
   projects: [
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
+        headless: false,
+        viewport: null, // use real window size
+        launchOptions: {
+          args: ['--start-maximized'], // full screen window
+        },
 
-        headless: false,            // GUI mode
-        viewport: null,             // use full window
-        screen: { width: 1920, height: 1080 }, // screen size
-        ignoreHTTPSErrors: true,
-
-        screenshot: 'only-on-failure',        // screenshots
+        // ✅ screenshots & videos
+        screenshot: 'only-on-failure',
         video: {
           mode: 'retain-on-failure',
-          dir: path.join(__dirname, 'Reports/videos'), // videos
+          dir: path.join(__dirname, 'Reports/videos'),
         },
         trace: 'retain-on-failure',
-
-        launchOptions: {
-          args: ['--start-maximized'], // force browser maximize
-        },
       },
     },
   ],
+
   use: {
-    baseURL: 'https://login.salesforce.com',
     actionTimeout: 0,
-    // 📌 optionally force device scale factor
-    deviceScaleFactor: 1,
+    baseURL: 'https://login.salesforce.com',
   },
 });
