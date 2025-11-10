@@ -92,7 +92,7 @@ Extend automation to other Salesforce modules
 
 Integrate CI/CD pipelines for scheduled runs
 
-Add notification support on test completion (Slack/Em
+Add notification support on test completion (Slack/Email)
 
 Note: This framework is built keeping modularity, scalability, and maintainability in mind to support continuous test development and integration.
 
