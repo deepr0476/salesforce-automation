@@ -20,4 +20,3 @@ export class LoginPage {
     console.log('✅ Logged in successfully!');
   }
 }
-
