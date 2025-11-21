@@ -6,7 +6,7 @@ import { readExcelData } from '../utils/readExcelData.js';
 import { decrypt } from '../utils/cryptoUtil.js';
 import { writeAccountResultsToExcel } from '../utils/writeToExcel.js';
 import { LoginPage } from '../pages/loginPage.js';
-import { AccountsPage } from '../pages/accountsPage.js';
+import { AccountsPage } from '../pages/accountspage.js';
 import { NewAccountDialog } from '../pages/newAccountDialog.js';
 
 const TEST_TIMEOUT = 8 * 60 * 1000;
