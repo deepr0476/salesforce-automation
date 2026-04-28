@@ -1,7 +1,7 @@
 const { encrypt } = require('./cryptoUtil');
 // Initialise 
-const username = 'raman@pw.com';
-const password = '92614rgr@Bhl';
+const username = 'enter your username here ';
+const password = 'enter your password here ';
 // Encrypt
 const encryptedUsername = encrypt(username);
 const encryptedPassword = encrypt(password);
